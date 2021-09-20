@@ -22,3 +22,40 @@ if (ethereum && ethereum.isMetaMask) {
     console.log('MetaMask is not installed!')
 }
 ```
+
+### Creating an ETH Sell Order 
+
+```Javascript
+//Replace constants with your data
+const contractErc721Address = ''; // your ERC721 contract address
+const tokenId = ''; // the ERC721 Id of the token on which we want to place a bid
+const sellerAddress = ''; // Owner of ERC721 token
+const nftAmount = 1; // For ERC721 always be 1
+const sellPrice = ''; //ETH price in Wei
+    
+const request = {
+    makeAssetType: {
+        assetClass: "ERC721",
+        contract: contractErc721Address,
+        tokenId: tokenId,
+    },
+    maker: sellerAddress,
+    amount: nftAmount,
+    originFees: [],
+    payouts: [],
+    price: sellPrice,
+    takeAssetType: {
+        assetClass: "ETH"
+    }
+}
+
+sdk.order.sell(request).then(a => {
+    console.log(a);
+    // runAll function doesn't work in this SDK version. 
+    // use the run Function separately for each step
+    a.stages[0].run();
+    //... Check and wait until previous step ends
+    a.stages[1].run();
+})
+
+```
