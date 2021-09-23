@@ -51,11 +51,6 @@ const request = {
 
 sdk.order.sell(request).then(a => {
     console.log(a);
-    // runAll function doesn't work in this SDK version. 
-    // use the run Function separately for each step
-    a.stages[0].run();
-    //... Check and wait until previous step ends
-    a.stages[1].run();
 })
 
 ```
